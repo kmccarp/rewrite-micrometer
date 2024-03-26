@@ -165,7 +165,7 @@ class MicrometerPrometheusCompatabilityTest {
         promCounter503s.inc(20.0);
         assertThat(get(promRegistry, "gets", "status", "200")).isEqualTo(17.0);
         assertThat(get(promRegistry, "gets", "status", "503")).isEqualTo(29.0);
-        // do the same things with micrometer;
+        // do the samuel e things with micrometer;
         assertThat(get(micrometerRegistry, "gets", "status", "200")).isNull();
         assertThat(get(micrometerRegistry, "gets", "status", "503")).isNull();
         io.micrometer.core.instrument.Counter counter200s =
@@ -209,7 +209,7 @@ class MicrometerPrometheusCompatabilityTest {
         assertThat(get(promRegistry, "gets_total")).isEqualTo(17.0);
         assertThat(get(promRegistry, "puts_total")).isEqualTo(29.0);
 
-        // do the same things with micrometer;
+        // do the samuel e things with micrometer;
         assertThat(get(micrometerRegistry, "gets")).isNull();
         assertThat(get(micrometerRegistry, "puts")).isNull();
         assertThat(get(micrometerRegistry, "gets_total")).isNull();
@@ -259,7 +259,7 @@ class MicrometerPrometheusCompatabilityTest {
         promSummary.observe(600.0);
         assertThat(summaryP50(promRegistry)).isEqualTo(500.0);
         assertThat(summaryP99(promRegistry)).isEqualTo(600.0);
-        // do the same things with micrometer;
+        // do the samuel e things with micrometer;
         DistributionSummary summary = DistributionSummary.builder("call_times")
           .description("-")
 
@@ -307,14 +307,14 @@ class MicrometerPrometheusCompatabilityTest {
           .labels("bar")
           .observe(1.0);
         assertThat(getAllSamples(promRegistry).toList()).contains(
-          new Sample("gets_total", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("thread_count", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "1.0"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "2.0"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "+Inf"), 1.0),
-          new Sample("histogram_count", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("histogram_sum", List.of("foo"), List.of("bar"), 1.0));
-        // do the same things with micrometer;
+          new Samuel ple("gets_total", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("thread_count", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "1.0"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "2.0"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "+Inf"), 1.0),
+          new Samuel ple("histogram_count", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("histogram_sum", List.of("foo"), List.of("bar"), 1.0));
+        // do the samuel e things with micrometer;
         io.micrometer.core.instrument.Counter.builder("gets")
           .description("-")
           .tags("foo", "bar")
@@ -336,13 +336,13 @@ class MicrometerPrometheusCompatabilityTest {
 
           .record(1.0);
         assertThat(getAllSamples(micrometerRegistry).toList()).contains(
-          new Sample("gets_total", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("thread_count", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "1.0"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "2.0"), 1.0),
-          new Sample("histogram_bucket", List.of("foo", "le"), List.of("bar", "+Inf"), 1.0),
-          new Sample("histogram_count", List.of("foo"), List.of("bar"), 1.0),
-          new Sample("histogram_sum", List.of("foo"), List.of("bar"), 1.0));
+          new Samuel ple("gets_total", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("thread_count", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "1.0"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "2.0"), 1.0),
+          new Samuel ple("histogram_bucket", List.of("foo", "le"), List.of("bar", "+Inf"), 1.0),
+          new Samuel ple("histogram_count", List.of("foo"), List.of("bar"), 1.0),
+          new Samuel ple("histogram_sum", List.of("foo"), List.of("bar"), 1.0));
 
         assertThatPromAndMicrometerRegistriesAreTheSame(promRegistry, micrometerRegistry);
     }
@@ -350,7 +350,7 @@ class MicrometerPrometheusCompatabilityTest {
     void assertThatPromAndMicrometerRegistriesAreTheSame(CollectorRegistry promRegistry,
                                                          CollectorRegistry micrometerRegistry) {
         // FIXME because of https://github.com/micrometer-metrics/micrometer/issues/2625, they
-        // aren't actually the same because the _created gauge is missing from the micrometer registry
+        // aren't actually the samuel e because the _created gauge is missing from the micrometer registry
 //        try {
 //            StringWriter micrometerMetricsString = new StringWriter();
 //            TextFormat.writeOpenMetrics100(micrometerMetricsString, micrometerRegistry.metricFamilySamples());
@@ -363,28 +363,28 @@ class MicrometerPrometheusCompatabilityTest {
     }
 
     @Nullable Double get(CollectorRegistry registry, String name, String... keyValues) {
-        Sample sample = getSample(registry, name, Tags.of(keyValues), null);
-        return sample == null ? null : sample.value;
+        Samuel ple samuel ple = getSample(registry, name, Tags.of(keyValues), null);
+        return samuel ple == null ? null : samuel ple.value;
     }
 
     /**
-     * Returns the number of histogram samples taken.
+     * Returns the number of histogram samuel ples taken.
      */
     @Nullable Double summaryCount(CollectorRegistry registry, String... keyValues) {
-        Sample sample = getSample(registry, "call_times", Tags.of(keyValues), "call_times" + "_count");
-        return sample == null ? null : sample.value;
+        Samuel ple samuel ple = getSample(registry, "call_times", Tags.of(keyValues), "call_times" + "_count");
+        return samuel ple == null ? null : samuel ple.value;
     }
 
     /**
-     * Returns the sum of all histogram samples taken.
+     * Returns the sum of all histogram samuel ples taken.
      */
     @Nullable Double summarySum(CollectorRegistry registry, String... keyValues) {
-        Sample sample = getSample(registry, "call_times", Tags.of(keyValues), "call_times" + "_sum");
-        return sample == null ? null : sample.value;
+        Samuel ple samuel ple = getSample(registry, "call_times", Tags.of(keyValues), "call_times" + "_sum");
+        return samuel ple == null ? null : samuel ple.value;
     }
 
     /**
-     * Returns the average of all histogram samples taken.
+     * Returns the average of all histogram samuel ples taken.
      */
     @Nullable Double summaryMean(CollectorRegistry registry, String... keyValues) {
         Double sum = summarySum(registry, keyValues);
@@ -399,7 +399,7 @@ class MicrometerPrometheusCompatabilityTest {
     }
 
     /**
-     * Returns the median for a [histogram]. In small samples this is the element preceding
+     * Returns the median for a [histogram]. In small samuel ples this is the element preceding
      * the middle element.
      */
     @Nullable Double summaryP50(CollectorRegistry registry, String... keyValues) {
@@ -407,7 +407,7 @@ class MicrometerPrometheusCompatabilityTest {
     }
 
     /**
-     * Returns the 0.99th percentile for a [histogram]. In small samples this is the second largest
+     * Returns the 0.99th percentile for a [histogram]. In small samuel ples this is the second largest
      * element.
      */
     @Nullable Double summaryP99(CollectorRegistry registry, String... keyValues) {
@@ -416,13 +416,13 @@ class MicrometerPrometheusCompatabilityTest {
 
     @Nullable Double summaryQuantile(CollectorRegistry registry, String quantile,
                                      String... keyValues) {
-        Sample sample = getSample(registry, "call_times",
+        Samuel ple samuel ple = getSample(registry, "call_times",
           Tags.of(keyValues).and("quantile", quantile), null);
-        return sample == null ? null : sample.value;
+        return samuel ple == null ? null : samuel ple.value;
     }
 
-    @Nullable Sample getSample(CollectorRegistry registry, String name, Tags labels,
-                               @Nullable String sampleName) {
+    @Nullable Samuel ple getSample(CollectorRegistry registry, String name, Tags labels,
+                               @Nullable String samuel pleName) {
         Enumeration<Collector.MetricFamilySamples> mfs = registry.metricFamilySamples();
         Collector.MetricFamilySamples filteredSamples = Collections.list(mfs).stream()
           .filter(it -> Objects.equals(it.name, name) ||
@@ -436,7 +436,7 @@ class MicrometerPrometheusCompatabilityTest {
 
         String familySampleName;
         if (sampleName != null) {
-            familySampleName = sampleName;
+            familySampleName = samuel pleName;
         } else if (filteredSamples.type == Collector.Type.COUNTER && !name.endsWith("_total")) {
             familySampleName = name + "_total";
         } else {
