@@ -80,7 +80,7 @@ public class TimerToObservation extends Recipe {
                     public J.MethodInvocation visitMethodInvocation(J.MethodInvocation mi, ExecutionContext ctx) {
                         if (registerMatcher.matches(mi)) {
                             Expression timerName = null;
-                            Expression registry = mi.getArguments().get(0);
+                            Expression registry = mi.getArguments().getFirst();
 
                             List<String> builder = new ArrayList<>();
                             List<Expression> parameters = new ArrayList<>();
@@ -89,11 +89,11 @@ public class TimerToObservation extends Recipe {
                             while (maybeBuilder instanceof J.MethodInvocation) {
                                 J.MethodInvocation builderMethod = (J.MethodInvocation) maybeBuilder;
                                 if (builderMatcher.matches(maybeBuilder)) {
-                                    timerName = builderMethod.getArguments().get(0);
+                                    timerName = builderMethod.getArguments().getFirst();
                                 }
                                 else if (tagMatcher.matches(maybeBuilder)) {
                                     builder.add("\n.highCardinalityKeyValue(#{any(String)}, #{any(String)})");
-                                    parameters.add(builderMethod.getArguments().get(0));
+                                    parameters.add(builderMethod.getArguments().getFirst());
                                     parameters.add(builderMethod.getArguments().get(1));
                                 }
                                 else if (tagsIterableMatcher.matches(maybeBuilder)) {
@@ -112,7 +112,7 @@ public class TimerToObservation extends Recipe {
                                 maybeBuilder = ((J.MethodInvocation) maybeBuilder).getSelect();
                             }
                             if (timerName != null) {
-                                parameters.add(0, timerName);
+                                parameters.addFirst(timerName);
                                 parameters.add(1, registry);
 
                                 maybeAddImport("io.micrometer.observation.Observation");

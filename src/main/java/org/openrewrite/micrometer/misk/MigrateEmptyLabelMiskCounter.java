@@ -74,7 +74,7 @@ public class MigrateEmptyLabelMiskCounter extends Recipe {
                             (String name, String help) -> Counter.builder(name).description(help).register(Metrics.globalRegistry)
                     ).build().apply(getCursor(),
                             method.getCoordinates().replace(),
-                            method.getArguments().get(0),
+                            method.getArguments().getFirst(),
                             method.getArguments().get(1));
 
                     maybeRemoveImport("misk.metrics.v2.Metrics");
